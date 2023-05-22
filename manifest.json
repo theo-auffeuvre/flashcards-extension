@@ -1,0 +1,12 @@
+{
+  "name": "Flashcard Saver",
+  "version": "1.0.0",
+  "description": "Flashcard Saver",
+  "manifest_version": 3,
+  "author": "Théo Auffeuvre",
+  "action":{
+      "default_popup": "index.html",
+      "default_title": "Flashcard Saver"
+  },
+  "permissions": ["storage", "declarativeContent", "activeTab", "scripting"]
+}
