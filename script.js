@@ -1,37 +1,54 @@
-import pdf from './node_modules/html-pdf';
+// import pdf from './node_modules/html-pdf';
 
-const data = [];
+const data = JSON.parse(localStorage.getItem('data'));
 
 const getFlashcard = () => {
-  // const theme = document.querySelector(".flashcard-game-card-front h4").innerHTML; 
-  // const question = document.querySelector(".flashcard-game-card-front .flashcard-game-card-content").innerHTML; 
+  // const theme = document.querySelector(".flashcard-game-card-front h4").innerHTML;
+  // const question = document.querySelector(".flashcard-game-card-front .flashcard-game-card-content").innerHTML;
   // const solution = document.querySelector(".flashcard-game-card-back .flashcard-game-card-content").innerHTML;
-
-  const fullfront = document.querySelector(".flashcard-game-card-front").innerHTML;
-  const fullback = document.querySelector(".flashcard-game-card-back").innerHTML;
+  const theme = document.querySelector(".flashcard-game-card-title").innerHTML;
+  const question = document.querySelector(".flashcard-game-card-content-markdown").innerHTML;
+  const answer = document.querySelector(".flashcard-game-card-back .flashcard-game-card-content").innerHTML;
   // const [tab] = chrome.runtime.query({active: true, lastFocusedWindow: true});
   chrome.runtime.sendMessage({
-    fullfront: fullfront,
-    fullback: fullback,
+    theme: theme,
+    question: question,
+    answer: answer,
   });
 }
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     data.push(request);
-    console.log(data);
+    localStorage.setItem('data', JSON.stringify(data));
+    // const result = document.querySelector('#result')
+    // result.innerHTML = data.map((item) => {
+    //   return `<div class="card">
+    //     <div class="card-body">
+    //       <h4 class="card-title">${item.theme}</h4>
+    //       <p class="card-text">${item.question}</p>
+    //       <p class="card-text">${item.answer}</p>
+    //     </div>
+    //   </div>`
+    // }).join('');
   }
 );
 
 
 const exportPDF = () => {
-  let html = fs.readFileSync('./results.html', 'utf8');
-  let options = { format: 'Letter' };
-  
-  pdf.create(html, options).toFile('./flashcards.pdf', function(err, res) {
-    if (err) return console.log(err);
-    console.log(res); // { filename: '/app/businesscard.pdf' }
-  });
+  let result = ""
+  result = data.map((item) => {
+    return `<div class="card">
+      <div class="card-body">
+        <h4 class="card-title">${item.theme}</h4>
+        <p class="card-text">${item.question}</p>
+        <p class="card-text">${item.answer}</p>
+      </div>
+    </div>`
+  }).join('');
+  let mywindow = window.open();
+  mywindow.document.write(result);
+  mywindow.print();
 }
 
 document.querySelector('#button').addEventListener("click", () => {
