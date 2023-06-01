@@ -2,11 +2,15 @@
   "name": "Flashcard Saver",
   "version": "1.0.0",
   "description": "Flashcard Saver",
+  "browser_action": {
+    "default_icon": "logo_wagon_icon.png",
+    "default_popup": "index.html"
+  },
   "manifest_version": 3,
   "author": "Théo Auffeuvre",
   "action":{
       "default_popup": "index.html",
       "default_title": "Flashcard Saver"
   },
-  "permissions": ["storage", "declarativeContent", "activeTab", "scripting"]
+  "permissions": ["storage", "declarativeContent", "activeTab", "scripting", "tabs", "http://*/*", "https://*/*", "webNavigation", "webRequest", "webRequestBlocking"]
 }

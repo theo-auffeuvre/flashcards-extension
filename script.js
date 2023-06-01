@@ -1,4 +1,3 @@
-// import pdf from './node_modules/html-pdf';
 
 const getFlashcard = () => {
   let theme = document.querySelector(".flashcard-game-card-header").innerHTML;
@@ -50,43 +49,26 @@ const showFlashcards = () => {
     r[a.theme] = [...r[a.theme] || [], a];
     return r;
   }, {});
-  console.log(Object.entries(groupData));
   Object.entries(groupData).forEach((item) => {
-    console.log(item[0]);
-    let card = document.createElement('div');
-    card.classList.add('accordion-card');
-    let cardTitle = document.createElement('div');
-    cardTitle.classList.add('accordion-title');
-    cardTitle.innerHTML = item[0];
-    card.appendChild(cardTitle);
-    item[1].forEach((item2) => {
-      let cardContent = document.createElement('div');
-      cardContent.classList.add('accordion-content');
-      card.appendChild(cardContent);
-      let cardQuestion = document.createElement('p');
-      cardQuestion.classList.add('accordion-text');
-      cardQuestion.innerHTML = item2.question;
-      cardContent.appendChild(cardQuestion);
-      let cardAnswer = document.createElement('p');
-      cardAnswer.classList.add('accordion-text');
-      cardAnswer.innerHTML = item2.answer;
-      cardContent.appendChild(cardAnswer);
-    })
-    document.querySelector('#result').appendChild(card);
-  })
-
-  // groupData.map((item) => {
-  //   let card = document.createElement('div');
-  //   card.classList.add('card');
-  //   let cardTitle = document.createElement('div');
-  //   cardTitle.classList.add('card-title');
-  //   cardTitle.innerHTML = item.theme;
-  //   // let cardQuestion = document.createElement('p');
-  //   // cardQuestion.classList.add('card-text');
-  //   // cardQuestion.innerHTML = item.question;
-  //   card.appendChild(cardTitle);
-  //   document.querySelector('#result').appendChild(card);
-  // });
+    let html = `
+      <div class="accordion-card">
+        <div class="accordion-title" id="accordion">${item[0]}</div>
+        <div class="accordion-content ">
+          ${item[1].map((item2) => {
+            return `<div class="flashcard">
+                      <div class="accordion-text text-secondary">${item2.question}</div>
+                      <div class="accordion-text">${item2.answer}</div>
+                    </div>`
+          }).join("")}
+        </div>
+      </div>
+    `;
+    document.querySelector('#result').innerHTML += html;
+    document.querySelector('#accordion').addEventListener("click", (e) => {
+      console.log(e.target);
+      e.target.nextSibling.style.display = "block";
+    });
+  });
 }
 
 const isFlashcardPage = () => {

@@ -38,20 +38,44 @@ button {
   text-align: left;
 }
 
+.accordion-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .accordion-title {
   background-color: #E60F05;
   color: #fff;
   padding: 0.5rem;
-  border-radius: 0.2rem;
   cursor: pointer;
   height: 2rem;
   display: flex;
+  width: 100%;
 }
 
 .accordion-title > * {
   display: flex;
   align-items: center;
   font-size: 1rem !important;
+}
+
+.accordion-content {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
+  border: 0.05rem solid #E60F05;
+  display: none;
+}
+
+.flashcard {
+  padding: 0.5rem;
+  border: 1px solid #E60F05;
 }
 
 svg {
